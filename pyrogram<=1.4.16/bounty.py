@@ -18,8 +18,8 @@ from pyrogram.types import (
 from pyrogram import Client, filters
 
 # Replace `YourRobot` with your robot's name.
-from ShinobuRobot.mongo import db
-from ShinobuRobot import pbot
+from YourRobot.mongo import db
+from YourRobot import pbot
 
 API_URL: str = "https://sasta-api.vercel.app"
 API_METHOD: str = "bounty"
@@ -82,7 +82,8 @@ class STRINGS:
 
 🎉 <b>Congratulations!</b> This is your highest bounty prize! 🥳
 
-💰 <b>Highest Bounty Prize:</b> <code>{}</code>
+💰 <b>Old Highest Bounty:</b> <code>{old_highest_bounty}</code>
+💰 <b>Highest Bounty Prize:</b> <code>{new_highest_bounty}</code>
     """
 
 async def download(url: str, file_name: str) -> None:
@@ -205,7 +206,10 @@ async def on_bounty(client: Client, message: Message) -> None:
         DB.set_highest_bounty(sender.id, response_json["prize"], response_json["url"])
     elif response_json["prize"] > highest_bounty:
         DB.set_highest_bounty(sender.id, response_json["prize"], bounty_poster_url)
-        text: str = STRINGS.NEW_RECORD.format(bounty_prize)
+        text: str = STRINGS.NEW_RECORD.format(
+            old_highest_bounty="{:,}".format(highest_bounty),
+            new_highest_bounty=bounty_prize
+            )
         await message.reply(text)
 
 @pbot.on_message(filters.command("bounty_stats"))

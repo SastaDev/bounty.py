@@ -267,4 +267,6 @@ A random 💰 bounty prize written inside.
 - `reply to media` is optional, and can be used to set the replied message's photo or document as the profile picture in the poster.
 
 ℹ️ *Note:* Ensure your main profile picture is an image, not a video or any other format.
+
+- */bounty_stats* - to know your stats!
 """
